@@ -81,6 +81,11 @@ def get_client_ip(request):
 # 	reader.close()
 # 	return country_name
 
+from files.models import Files
+
+def fileShare(request,pk):
+	file = get_object_or_404(Files, share_url=pk)
+	return redirect(file.document.url)
 
 def go(request,pk):
 	# try:

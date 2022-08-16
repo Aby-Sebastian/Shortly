@@ -23,6 +23,7 @@ urlpatterns = [
     path('campaign/', views.campaignPage, name='campaign'),
     path('tags/', views.tagsPage, name='tags'),
     path('files/', views.filesPage, name='files'),
+    path('file/<str:pk>/', views.fileShare, name='fileshare'),
     path('ind/', views.ind, name='ind'),   # Test link
 
     path('links/',views.user_ceated_links, name='user_created_links'), # Test link

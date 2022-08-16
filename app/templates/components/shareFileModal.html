@@ -12,6 +12,7 @@
         {{file.document}} <br>
         {{file.share_url}}
         <button href="#" class="p-2 card-link btn copy-btn" data-link="{% url 'index' %}{{file.share_url}}" id="copy{{link.id}}" >Copy</button>
+      <a class="p-2 card-link btn" href="{% url 'fileshare' file.share_url %}" target="_blank" >Open</a>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -28,6 +29,7 @@
 
     var ls = document.getElementById('copy{{link.id}}')
     ls.attributes['data-link'].value = str+ls.attributes['data-link'].value 
+    console.log(ls.attributes['data-link'].value);
     
 
   </script>

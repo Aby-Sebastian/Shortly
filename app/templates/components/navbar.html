@@ -1,0 +1,39 @@
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+  {% url 'dashboard' as dashboard %}
+  {% url 'test_links' as test_links %}
+  {% url 'tags' as tags %}
+  {% url 'files' as files %}
+    <div class="position-sticky pt-3">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == dashboard %}active{% endif %}" aria-current="page" href="{% url 'dashboard' %}">
+            <span data-feather="home"></span>
+            Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == test_links %}active{% endif %}" href="{% url 'test_links' %}">
+            <span data-feather="link"></span>
+            Links
+          </a>
+        </li>
+        
+
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == tags %}active{% endif %}" href="{% url 'tags' %}">
+            <span data-feather="tag"></span>
+            Tags
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == files %}active{% endif %}" href="{% url 'files' %}">
+            <span data-feather="file"></span>
+            Files
+          </a>
+        </li>
+        
+      </ul>
+
+      
+    </div>
+  </nav>

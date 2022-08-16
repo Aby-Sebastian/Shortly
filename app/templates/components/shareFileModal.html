@@ -1,0 +1,33 @@
+
+
+<!-- Modal -->
+<div class="modal fade" id="shareModal{{file.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Share File</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{file.document}} <br>
+        {{file.share_url}}
+        <button href="#" class="p-2 card-link btn copy-btn" data-link="{% url 'index' %}{{file.share_url}}" id="copy{{link.id}}" >Copy</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary btn-file-delete" data-sid="{{file.id}}" >Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    
+    var path = {{request.path}};
+    var url = String(document.URL);
+    var str = url.replace(String(path),'');
+
+    var ls = document.getElementById('copy{{link.id}}')
+    ls.attributes['data-link'].value = str+ls.attributes['data-link'].value 
+    
+
+  </script>

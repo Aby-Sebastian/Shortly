@@ -1,0 +1,73 @@
+<script>
+    $(".btn-edit").click(function () {
+    console.log('clicked on Edit button');
+    let id = $(this).attr("data-sid")
+    let csr = $("input[name=csrfmiddlewaretoken]").val();
+    mydata = { sid:id, csrfmiddlewaretoken:csr }
+    console.log(mydata);
+    $.ajax({
+        url: "{% url 'edit' %}",
+        method: 'POST',
+        data: mydata,
+        dataType: "json",
+        success: function (data) {
+          console.log(data)
+          $('#linkid').val(data.id)
+          $('#editurl').val(data.url);
+          $('#editshort_url').val(data.short_url);
+          $('#edittag').val(data.tags);
+          console.log(data.tag);
+          if (data.status == 1) {
+            $('#editLinkoffcanvasRight').offcanvas('hide');
+            // $(`#card${data.id}`).fadeOut()
+            
+            }
+          else if(data.status == 0){
+            console.log('link already edited or an error occured')
+          }
+          
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    })
+});
+$('.edit-save-btn').click(function() {
+  console.log('edit started');
+  let lid = $('#linkid').val();
+  let csr = $("input[name=csrfmiddlewaretoken]").val();
+  let ur = $('#editurl').val();
+  let sh = $('#editshort_url').val();
+  let tg = $('#edittag').val();
+  mydata = {id: lid, url: ur, short_url: sh, tags: tg, csrfmiddlewaretoken:csr}
+  $.ajax({
+    url: "{% url 'edit_link' %}",
+    method: 'POST',
+    data: mydata,
+    dataType: 'json',
+    success: function (data) {
+      console.log(data.messages)
+
+      // create a new div element
+      const newDiv = document.createElement("div");
+
+      // and give it some content
+      const newContent = document.createTextNode(data.messages);
+
+      // add the text node to the newly created div
+      newDiv.appendChild(newContent);
+
+      newDiv.className = "alert alert-success";
+      
+      // add the newly created element and its content into the DOM
+      const currentDiv = document.getElementById("top");
+      currentDiv.after(newDiv);
+
+      console.log('edit ended');
+      $('#editLinkoffcanvasRight').offcanvas('hide');
+      $(`#card${data.id}`).load(` #card${data.id} > `);
+    }
+  })
+})
+
+</script>

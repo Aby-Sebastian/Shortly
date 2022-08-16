@@ -1,0 +1,32 @@
+
+<h2>Show All Links</h2>
+Hello, {{request.user}}
+
+{% if data %}
+<table>
+    <tr>
+    <th>Urls</th>
+    <th>Short Urls</th>
+    <th>Created at</th>
+    <th>Username</th>
+    </tr>
+    {% for item in data %}
+    <form method="POST" action="{% url 'delete' item.id %}">
+        {% csrf_token %}
+    <tr>
+            <td>{{item.url}}</td>
+            <td>http://localhost:8000/{{item.short_url}}</td>
+            <td>{{item.date_created}}</td>
+            <td>{{item.user}}</td>
+            <td><button type="submit">done</button></td>
+    </tr>
+
+</form>
+    {% endfor %}
+
+</table>
+{% else %}
+    <p>No links uploaded</p>
+{% endif %}
+
+

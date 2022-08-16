@@ -1,0 +1,25 @@
+{% load static %}
+
+<!-- Button trigger modal -->
+
+<button type="button" class="p-2 card-link btn btn-qr " data-bs-toggle="modal" data-bs-target="#qrModal{{link.id}}">
+    QR Code
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade modal{{link.id}}" id="qrModal{{link.id}}" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="qrModalLabel">QR code</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- <h5>QR code here</h5> -->
+          <img src="{% static 'images/qr-code.png' %}" alt="" width="100%" height="auto">
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  

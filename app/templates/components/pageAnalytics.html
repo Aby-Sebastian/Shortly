@@ -1,0 +1,141 @@
+{% load static %}
+<!-- Button trigger modal -->
+<button type="button" class="p-2 card-link btn analytics" data-bs-toggle="modal" data-sid="{{link.id}}" data-bs-target="#analyticsModal{{link.id}}">
+    Analytics
+  </button>
+  
+ <!-- Modal -->
+ <div class="modal fade modal{{link.id}}" id="analyticsModal{{link.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Analytics </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-7">
+              <p class="fs-4" id="shorturl{{link.id}}">
+                {% url 'index' %}{{link.short_url}}
+              </p>
+            </div>
+            <div class="col text-end">
+              <a class="" href="{% url 'go' link.short_url %}" target="_blank">
+              <img src="{% static 'images/icons/external-link.svg' %}" alt="" data-bs-toggle="tooltip" data-bs-placement="top" title="Visit URL"> 
+              </a>
+              
+              <!-- <a class="copy-btn" data-link="{% url 'index' %}{{link.short_url}}"  href="" >
+              <img src="{% static 'images/icons/clipboard.svg' %}" alt="" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy">
+              </a> -->
+
+              <!-- <a class="" href="{% url 'test_links' %}" >
+                <img src="{% static 'images/icons/calendar.svg' %}" alt="" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+              </a>
+
+              <a class="" href="" data-bs-toggle="modal" data-bs-target="#exampleModal{{link.id}}" >
+                <img src="{% static 'images/icons/trash.svg' %}" alt="" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+              </a> -->
+              <!-- <span data-feather="external-link"></span>
+              <span data-feather="copy"></span>
+              <span data-feather="trash"></span> -->
+            </div>
+          </div>
+          
+            <div class="">
+              {{link.url_title}} <br>
+            
+              {{link.url}} <br>
+            </div> <br>
+            <script type="text/javascript">
+              var path = {{request.path}};
+              var url = String(document.URL);
+              var strl = url.replace(String(path),'');
+              console.log(strl)
+              var e=document.getElementById('shorturl'+{{link.id}});
+              e.innerText = strl+e.innerText;
+              console.log(e)
+            </script>
+            
+
+            <div class="">
+              <span data-feather="calendar"></span>
+              &nbsp;&nbsp; {{link.date_created.date}}
+            </div> <br>
+          <div class="card">
+            <canvas class="my-4 w-100" id="link{{link.id}}" width="900" height="380"></canvas>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="card">
+              Top devices
+              {{link.url}} <br>
+            </div>
+          </div>
+            <div class="col">
+              <div class="card">
+              {{link.short_url}}
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+              {{link.total_clicks}}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="card">
+                
+                <div class="card-body">
+                  <div class="card-title">Top devices</div>
+                  <p class="p-3 mb-2 bg-dark text-white">Desktop</p>
+                  <p class="p-3 mb-2 bg-dark text-white">Laptop</p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                
+                <div class="card-body">
+                  <div class="card-title">Top browsers</div>
+                  <p class="p-3 mb-2 bg-dark text-white">Firefox</p>
+                  <p class="p-3 mb-2 bg-dark text-white">Chrome</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="card">
+                
+                <div class="card-body">
+                  <div class="card-title">Top platforms</div>
+                  <p class="p-3 mb-2 bg-dark text-white">Linux</p>
+                  <p class="p-3 mb-2 bg-dark text-white">Windows 10</p>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                
+                <div class="card-body">
+                  <div class="card-title">Top Countries</div>
+                  <p class="p-3 mb-2 bg-dark text-white">India</p>
+                  <p class="p-3 mb-2 bg-dark text-white">US</p>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary btn-delete" data-sid="{{link.id}}" >View more</button>
+        </div>
+      </div> 
+    </div>
+ </div>

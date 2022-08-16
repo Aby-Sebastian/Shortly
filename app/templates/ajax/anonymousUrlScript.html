@@ -1,0 +1,67 @@
+{% load static %}
+<script>
+    
+$('#btn-shorten').click(function() {
+  console.log('shorten started');
+  let inp_url = $('input[name=url]').val();
+  let csr = $("input[name=csrfmiddlewaretoken]").val();
+  // let ur = $('#editurl').val();
+  // let sh = $('#editshort_url').val();
+  console.log(inp_url=='');
+  if(inp_url==''){
+    // console.log('yep');
+    alert('Enter url');
+  } else {
+    mydata = {inp_url: inp_url, csrfmiddlewaretoken:csr}
+    $.ajax({
+      url: "{% url 'anonymous_save' %}", 
+      method: 'POST',
+      data: mydata,
+      dataType: 'json',
+      success: function (data) {
+        console.log(data)
+        // create a new div element
+        const newDiv = document.createElement("div");
+        const secDiv = document.createElement("div");
+        
+        // and give it some content
+        const newContent = document.createTextNode(document.URL+data.short_url);
+
+        // add the text node to the newly created div
+        secDiv.appendChild(newContent);
+
+        newDiv.className = "alert alert-success d-flex";
+        secDiv.className = "flex-grow-1";
+        
+        // create a new div element
+        const button = document.createElement("button");
+        button.innerHTML = "Copy";
+        button.href = data.short_url;
+        button.setAttribute("data-link",document.URL+data.short_url);
+        // button.style.
+        button.className = "btn btn-primary copy-btn";
+        newDiv.appendChild(secDiv);
+        newDiv.appendChild(button);
+
+        // add the newly created element and its content into the DOM
+        const currentDiv = document.getElementById("form");
+        currentDiv.after(newDiv);
+
+        
+          console.log('doesnt exists.');
+          const script = document.createElement("script");
+          script.setAttribute("src","{% static 'js/copy.js' %}");
+          script.setAttribute("name","copy-script");
+          currentDiv.after(script);
+        
+        console.log('analytics ended');
+        
+        // $('#editLinkoffcanvasRight').offcanvas('hide');
+        // $(`#card${data.id}`).load(` #card${data.id} > `);
+        
+      }
+    })
+  }
+});
+
+</script>

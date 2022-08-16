@@ -1,0 +1,19 @@
+<div class="container">
+    <h3>Url Shortner</h3>
+    <nav>
+        Hello, {{request.user}} <span> <a href="{% url 'register' %}">Register</a></span> 
+        <span> <a href="{% url 'login' %}">Login</a></span>
+        <span> <a href="{% url 'logout' %}">Logout</a></span><br>
+    </nav>
+    
+    <a href="{% url 'user_created_links' %}">Show all Links</a>
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Submit</button>
+    </form>
+
+    
+    
+    
+</div>

@@ -1,0 +1,45 @@
+
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="editLinkoffcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Edit Links</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <!-- <label for="exampleFormControlInput1" class="form-label">Url</label> -->
+                      <input type="text" class="form-control shorturl-inp" id="editurl" name="url" placeholder="Url">
+
+                
+            </div>
+
+            <!-- Checkbox -->
+            <div class="form-check">
+                <input type="hidden" name="linkid" id="linkid">
+                <input type="checkbox" id="myChecker" class="form-check-input " name="checkbox" >
+                <!-- {{form.checkbox.data}} -->
+                <label class="form-check-label" for="myChecker">
+                    Edit short link
+                </label>
+            </div>
+            <div class="row" id="custShortUrl" style="display: none;">
+                <div class="mb-3">
+                    
+                    
+                    <input type="text" class="form-control url-inp" id="editshort_url" name="short_url" placeholder="Custom short url"></textarea>
+                </div>
+
+            </div>
+            <div class="mb-3">
+                    <input type="text" class="form-control " id="edittag" name="tags" placeholder="Tags">
+            </div>
+
+
+            <input type="button" value="Save" class="btn btn-primary edit-save-btn">
+        </form>
+    </div>
+</div>

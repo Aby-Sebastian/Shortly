@@ -1,0 +1,75 @@
+<script>
+    
+$('.analytics').click(function() {
+  console.log('analytics started');
+  let id = $(this).attr("data-sid")
+
+
+  // let lid = $('#linkid').val();
+  // let csr = $("input[name=csrfmiddlewaretoken]").val();
+  // let ur = $('#editurl').val();
+  // let sh = $('#editshort_url').val();
+  mydata = {url: id}
+  $.ajax({
+    url: "{% url 'analytics' %}",
+    method: 'GET',
+    data: mydata,
+    // dataType: 'json',
+    success: function (data) {
+      console.log(data)
+      console.log(data.id)
+      console.log('analytics ended');
+      // $('#editLinkoffcanvasRight').offcanvas('hide');
+      // $(`#card${data.id}`).load(` #card${data.id} > `);
+
+      // JS - Destroy exiting Chart Instance to reuse <canvas> element
+      let chartStatus = Chart.getChart('link'+data.id); // <canvas> id
+      if (chartStatus != undefined) {
+        chartStatus.destroy();
+      }
+      //-- End of chart destroy  
+
+      /* globals Chart:false, feather:false */
+
+      (function () {
+        'use strict'
+
+        feather.replace()
+
+        // Graphs
+        var ctx = document.getElementById('link'+data.id)
+        // eslint-disable-next-line no-unused-vars
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: data.labels,
+            datasets: [{
+              data: data.data,
+              lineTension: 0,
+              backgroundColor: 'transparent',
+              borderColor: '#007bff',
+              borderWidth: 4,
+              pointBackgroundColor: '#007bff'
+            }]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: false
+                }
+              }]
+            },
+            legend: {
+              display: false
+            }
+          }
+        })
+      })()
+
+      
+    }
+  }) 
+})
+
+</script>

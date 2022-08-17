@@ -40,7 +40,7 @@ def home(request):
 	return render(request,'main/index.html',{'form':sform})
 
 def anonymous_save(request):
- 
+ 	''' saves anonymous users web urls '''
 	if request.method == 'POST':
 		form = CreateLinkForm(request.POST)
 		if form.is_valid():
@@ -61,6 +61,7 @@ def link_shortner(request,pk):
 
 
 def get_client_ip(request):
+	''' gets ip address '''
 	x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
 	if x_forwarded_for:
 		ip = x_forwarded_for.split(',')[0]
@@ -84,10 +85,12 @@ def get_client_ip(request):
 from files.models import Files
 
 def fileShare(request,pk):
+	''' File redirecting '''
 	file = get_object_or_404(Files, share_url=pk)
 	return redirect(file.document.url)
 
 def go(request,pk):
+	''' website resharing '''
 	# try:
 	#     url_details=Links.objects.get(short_url=pk)
 	# except :

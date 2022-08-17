@@ -11,13 +11,13 @@
       <div class="modal-body">
         {{file.document}} <br>
         {{file.share_url}}
-        <button href="#" class="p-2 card-link btn copy-btn" data-link="{% url 'index' %}{{file.share_url}}" id="copy{{link.id}}" >Copy</button>
-      <a class="p-2 card-link btn" href="{% url 'fileshare' file.share_url %}" target="_blank" >Open</a>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          {{file.share_url}}
+          <button href="#" class="p-2 card-link btn copy-btn me-md-2" data-link="{% url 'index' %}{{file.share_url}}" id="copy{{link.id}}" >Copy</button>
+          <a class="p-2 card-link btn" href="{% url 'fileshare' file.share_url %}" target="_blank" >Open</a>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary btn-file-delete" data-sid="{{file.id}}" >Delete</button>
-      </div>
+      
     </div>
   </div>
 </div>

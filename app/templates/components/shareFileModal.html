@@ -13,8 +13,8 @@
         {{file.share_url}}
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
           {{file.share_url}}
-          <button href="#" class="p-2 card-link btn copy-btn me-md-2" data-link="{% url 'index' %}{{file.share_url}}" id="copy{{link.id}}" >Copy</button>
-          <a class="p-2 card-link btn" href="{% url 'fileshare' file.share_url %}" target="_blank" >Open</a>
+          <button href="#" class="p-2 card-link btn btn-outline-dark copy-btn me-md-2" data-link="{% url 'index' %}{{file.share_url}}" id="copy{{link.id}}" >Copy</button>
+          <a class="p-2 card-link btn btn-outline-dark" href="{% url 'fileshare' file.share_url %}" target="_blank" >Open</a>
         </div>
       </div>
       

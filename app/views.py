@@ -22,6 +22,9 @@ from django.db.models import Q, F
 # Create your views here.
 
 def home(request):
+	'''
+		index page
+	'''
 	sform = CreateLinkForm()
 	
 	if request.method == 'POST':
@@ -40,7 +43,7 @@ def home(request):
 	return render(request,'main/index.html',{'form':sform})
 
 def anonymous_save(request):
- 	''' saves anonymous users web urls '''
+	''' saves anonymous users web urls '''
 	if request.method == 'POST':
 		form = CreateLinkForm(request.POST)
 		if form.is_valid():
@@ -164,6 +167,9 @@ def title_parser(url):
 	return result
 
 def user_ceated_links(request):
+	''' 
+		user creted links 
+	'''
 	if request.user.is_anonymous:
 		print('AnonymousUser')
 		print(request.user.is_anonymous)
@@ -234,6 +240,9 @@ def edit_links(request):
 from django.core import serializers
 
 def edit(request):
+	'''
+		edit method returns in json form
+	'''
 	if request.method == 'POST':
 		print('edit --')
 		id = request.POST.get('id')
@@ -292,16 +301,16 @@ from shorty.settings import WEB_ADDRESS
 print(WEB_ADDRESS)
 
 def generate_qrcode(short_url):
-    qrcode_img = qrcode.make(WEB_ADDRESS + self.short_url)
-    canvas = Image.new('RGB', (qrcode_img.pixel_size,qrcode_img.pixel_size), 'white')
-    draw = ImageDraw.Draw(canvas)
-    canvas.paste(qrcode_img)
-    qrname = f"qr_code-{self.short_url}.png"
-    buffer = BytesIO()
-    canvas.save(buffer, 'PNG')
-    self.qr_code.save(qrname, File(buffer), save=False)
-    canvas.close()
-    return self.qr_code
+	qrcode_img = qrcode.make(WEB_ADDRESS + self.short_url)
+	canvas = Image.new('RGB', (qrcode_img.pixel_size,qrcode_img.pixel_size), 'white')
+	draw = ImageDraw.Draw(canvas)
+	canvas.paste(qrcode_img)
+	qrname = f"qr_code-{self.short_url}.png"
+	buffer = BytesIO()
+	canvas.save(buffer, 'PNG')
+	self.qr_code.save(qrname, File(buffer), save=False)
+	canvas.close()
+	return self.qr_code
 
 def filesPage(request):
 	user_specific = Files.objects.filter(user=request.user.id).order_by('-uploaded_at')

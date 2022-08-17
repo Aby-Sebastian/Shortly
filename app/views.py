@@ -549,6 +549,9 @@ def mnb(i):
 	return i.date.date(), i.click
 
 def analytics(request):
+	'''
+		Analytics data for links page for chart
+	'''
 	obj = request.GET.get('url')
 	print(obj)
 	link = Links.objects.get(id=obj)

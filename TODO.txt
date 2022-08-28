@@ -1,1 +1,4 @@
 [ ] - complete share url section
+[ ] - export urls as pdf or csv
+[x] - complete forgott password section using django default authentication and gmail smtp module.
+[ ] - send welcome when a user registers to the site.

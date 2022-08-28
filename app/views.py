@@ -286,8 +286,9 @@ def dashboard(request):
 	context = {'l_data': l_data}
 	return render(request, 'dashboard/dashboard.html', context=context)
 
-def campaignPage(request):
-	return render(request, 'dashboard/campaign.html')
+def settingsPage(request):
+	print(request.path)
+	return render(request, 'dashboard/settings.html')
 
 def tagsPage(request):
 	# tags = Tag.objects.all()
@@ -314,7 +315,7 @@ def generate_qrcode(short_url):
 
 def filesPage(request):
 	user_specific = Files.objects.filter(user=request.user.id).order_by('-uploaded_at')
-	print(user_specific)
+	print(request.path)
 	if request.method == 'POST':
 		form = UploadFileForm(request.POST, request.FILES)
 		if form.is_valid():

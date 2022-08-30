@@ -32,7 +32,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if request.path == settings %}active{% endif %}" href="{% url 'settings' %}">
+          <a class="nav-link {% if request.path == '/settings/' %}active{% endif %}" href="{% url 'settings' %}">
             <span data-feather="settings"></span>
             Settings
           </a>

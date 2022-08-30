@@ -33,6 +33,8 @@ urlpatterns = [
     path('edit/',views.edit_links,name='edit'),
     path('edit_link/',views.edit,name='edit_link'),
     
+    path('t/', views.temp, name="t"),
+
     path('qr/<str:short_url>',views.qr_code,name='qr'),
     path('analytics/',views.analytics, name='analytics'),
 
@@ -40,6 +42,14 @@ urlpatterns = [
     path('register/',views.registerUser,name='register'),
     path('login/',views.loginPage,name='login'),
     path('logout/',views.logoutUser,name='logout'),
+
+    # password change
+    path('change_password/', 
+        auth_views.PasswordChangeView.as_view(template_name='password/change_password.html'), 
+        name="change_password"),
+    path('password_change_done/', 
+        auth_views.PasswordChangeDoneView.as_view(template_name='password/password_change_done.html'), 
+        name="password_change_done"),
 
     # password reset 
     path('reset_password/', 

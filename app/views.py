@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.core.paginator import Paginator
+from django.core.mail import send_mail
+from django.conf import settings
 from django.utils import timezone
 import uuid
 import qrcode
@@ -287,8 +289,8 @@ def dashboard(request):
 	return render(request, 'dashboard/dashboard.html', context=context)
 
 def settingsPage(request):
-	print(request.path)
-	return render(request, 'dashboard/settings.html')
+	user = User.objects.get(pk=request.user.id)
+	return render(request, 'dashboard/settings.html', {'user':user})
 
 def tagsPage(request):
 	# tags = Tag.objects.all()
@@ -340,12 +342,25 @@ def deleteFile(request):
 		return JsonResponse({'status':1, 'id':id})
 	return JsonResponse({'status':0})
 
+def temp(request):
+	return render(request, 'dashboard/temp.html')
+
 def registerUser(request):
 	
 	if request.method == 'POST':
 		form = CreateUserForm(request.POST)
 		if form.is_valid():
-			form.save()
+			user = form.save()
+			username = form.cleaned_data.get('username')
+			
+			mail = request.POST.get('email')
+			subject = f'Welcome to Shortly'
+			message = f'Hi {username}, Welcome to Shortly. Thank you for registering in our website.'
+			email_from = settings.EMAIL_HOST_USER
+			recipient_list = [mail]
+			send_mail(subject, message, email_from, recipient_list)
+
+			messages.success(request, message=f'Welcome {username}, Your Account is created now')
 			return redirect('login')
 	else:
 		form = CreateUserForm()

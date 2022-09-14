@@ -1,4 +1,8 @@
 [ ] - complete share url section
 [ ] - export urls as pdf or csv
 [x] - complete forgott password section using django default authentication and gmail smtp module.
-[ ] - send welcome when a user registers to the site.
+[x] - send welcome when a user registers to the site.
+[x] - user can change password from user settings page.
+[x] - add .env file to site and move all keys to that file.
+[x] - add email support strings to settings file.
+[ ] - add cache support using redis.

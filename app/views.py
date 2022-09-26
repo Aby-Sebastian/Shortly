@@ -20,6 +20,7 @@ from taggit.models import Tag # taggit model
 from anonymous_data.models import AnonymousUsersLink
 from django.utils.text import slugify
 from django.db.models import Q, F
+from django.views.generic import TemplateView
 # Create your views here.
 
 def home(request):
@@ -302,17 +303,17 @@ from shorty.settings import WEB_ADDRESS
 
 print(WEB_ADDRESS)
 
-def generate_qrcode(short_url):
-	qrcode_img = qrcode.make(WEB_ADDRESS + self.short_url)
-	canvas = Image.new('RGB', (qrcode_img.pixel_size,qrcode_img.pixel_size), 'white')
-	draw = ImageDraw.Draw(canvas)
-	canvas.paste(qrcode_img)
-	qrname = f"qr_code-{self.short_url}.png"
-	buffer = BytesIO()
-	canvas.save(buffer, 'PNG')
-	self.qr_code.save(qrname, File(buffer), save=False)
-	canvas.close()
-	return self.qr_code
+# def generate_qrcode(short_url):
+# 	qrcode_img = qrcode.make(WEB_ADDRESS + self.short_url)
+# 	canvas = Image.new('RGB', (qrcode_img.pixel_size,qrcode_img.pixel_size), 'white')
+# 	draw = ImageDraw.Draw(canvas)
+# 	canvas.paste(qrcode_img)
+# 	qrname = f"qr_code-{self.short_url}.png"
+# 	buffer = BytesIO()
+# 	canvas.save(buffer, 'PNG')
+# 	self.qr_code.save(qrname, File(buffer), save=False)
+# 	canvas.close()
+# 	return self.qr_code
 
 def filesPage(request):
 	user_specific = Files.objects.filter(user=request.user.id).order_by('-uploaded_at')
@@ -539,3 +540,9 @@ def analytics(request):
 	print(data)
 
 	return JsonResponse({'status': x, 'id': obj, 'labels': labels, 'data': data})
+
+def PagenotFound(request, exception):
+	return render(request, "main/404.html")
+
+def ServernotFound(request):
+	return render(request, "main/500.html")

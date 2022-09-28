@@ -14,10 +14,11 @@
         </div>
         <div class="modal-body">
           <div class="row">
-            <div class="col-7">
-              <p class="fs-4" id="shorturl{{link.id}}">
-                {% url 'index' %}{{link.short_url}}
+            <div class="col-11">
+              <p class="fs-4" >
+                {{link.url_title}}
               </p>
+              <p class="fs-6">{{link.url}}</p>
             </div>
             <div class="col text-end">
               <a class="" href="{% url 'go' link.short_url %}" target="_blank">
@@ -41,48 +42,31 @@
             </div>
           </div>
           
-            <div class="">
-              {{link.url_title}} <br>
-            
-              {{link.url}} <br>
-            </div> <br>
+            <div id="shorturl{{link.id}}">
+              {% url 'index' %}{{link.short_url}}
+              
+            </div> 
             <script type="text/javascript">
               var path = {{request.path}};
               var url = String(document.URL);
               var strl = url.replace(String(path),'');
-              console.log(strl)
               var e=document.getElementById('shorturl'+{{link.id}});
-              e.innerText = strl+e.innerText;
-              console.log(e)
+              e.innerText = String(strl+e.innerText);
+              e.removeChild(e.firstElementChild);
             </script>
             
-
-            <div class="">
-              <span data-feather="calendar"></span>
-              &nbsp;&nbsp; {{link.date_created.date}}
-            </div> <br>
+            <div class="row">
+              <div class="col-8">
+                <span data-feather="calendar"></span>
+                &nbsp;&nbsp; {{link.date_created.date}}
+              </div> 
+              <div class="col text-end">  Total Clicks <b>{{link.total_clicks}} </b></div>
+            </div>
           <div class="card">
             <canvas class="my-4 w-100" id="link{{link.id}}" width="900" height="380"></canvas>
           </div>
 
-          <div class="row">
-            <div class="col">
-              <div class="card">
-              Top devices
-              {{link.url}} <br>
-            </div>
-          </div>
-            <div class="col">
-              <div class="card">
-              {{link.short_url}}
-              </div>
-            </div>
-            <div class="col">
-              <div class="card">
-              {{link.total_clicks}}
-              </div>
-            </div>
-          </div>
+          
 
           <div class="row">
             <div class="col">
@@ -132,10 +116,10 @@
           </div>
 
         </div>
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary btn-delete" data-sid="{{link.id}}" >View more</button>
-        </div>
+        </div> -->
       </div> 
     </div>
  </div>

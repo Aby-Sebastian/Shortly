@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404,get_list_or_404
 
 from django.contrib.auth.decorators import login_required
@@ -20,6 +21,7 @@ from taggit.models import Tag # taggit model
 from anonymous_data.models import AnonymousUsersLink
 from django.utils.text import slugify
 from django.db.models import Q, F
+from django.db.models import Sum
 from django.views.generic import TemplateView
 # Create your views here.
 
@@ -114,7 +116,7 @@ def go(request,pk):
 			# print(obj.increment_count())
 			obj.increment_count()
 			obj.save()
-			print(click)
+			print('click is: ',click)
 			print('if part success')
 		else:
 			"""
@@ -283,9 +285,10 @@ def edit(request):
 	return JsonResponse({'status':0})
 
 def dashboard(request):
-	l_data = Links.objects.all().values('url')
-
-	context = {'l_data': l_data}
+	
+	l_user = Links.objects.filter(user=request.user).order_by('-total_clicks')
+	l_all = Links.objects.aggregate(Sum('total_clicks'))['total_clicks__sum']
+	context = { 'l_all': l_all, 'l_user': l_user, 'top_3': l_user[:3]}
 	return render(request, 'dashboard/dashboard.html', context=context)
 
 def settingsPage(request):
@@ -518,6 +521,15 @@ def analytics_data(request):
 
 def mnb(i):
 	return i.date.date(), i.click
+
+def dashboard_or_analytics_chart(request):
+	
+	Analytics.objects.filter(date__date__gte=timezone.now().date()-timezone.timedelta(6), date__date__lte=timezone.now().date())
+	Analytics.objects.filter(date__date__gte=timezone.now().date()-timezone.timedelta(6), date__date__lte=timezone.now().date(),url=10).aggregate(Sum('click'))['click__sum']
+	'''will get and cound clicks of last 7 days'''
+	Analytics.objects.aggregate(Sum('click')) # total clicks happened using shortened urls
+	'''will return links raging from gte date to lte date'''
+	return JsonResponse({"hi":'hii'}) 
 
 def analytics(request):
 	'''

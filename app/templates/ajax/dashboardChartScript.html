@@ -1,0 +1,70 @@
+<script>
+    
+    $(document).ready(function() {
+      console.log('analytics started');
+      
+
+      
+      $.ajax({
+        url: "{% url 'dashboard_chart' %}",
+        method: 'GET',
+        data: mydata,
+        // dataType: 'json',
+        success: function (data) {
+          console.log(data)
+          
+          console.log('analytics ended');
+          // $('#editLinkoffcanvasRight').offcanvas('hide');
+          // $(`#card${data.id}`).load(` #card${data.id} > `);
+    
+          // JS - Destroy exiting Chart Instance to reuse <canvas> element
+          let chartStatus = Chart.getChart('myChart'); // <canvas> id
+          if (chartStatus != undefined) {
+            chartStatus.destroy();
+          }
+          //-- End of chart destroy  
+    
+          /* globals Chart:false, feather:false */
+    
+          (function () {
+            'use strict'
+    
+            feather.replace()
+    
+            // Graphs
+            var ctx = document.getElementById('link'+data.id)
+            // eslint-disable-next-line no-unused-vars
+            var myChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: data.labels,
+                datasets: [{
+                  data: data.data,
+                  lineTension: 0,
+                  backgroundColor: 'transparent',
+                  borderColor: '#007bff',
+                  borderWidth: 4,
+                  pointBackgroundColor: '#007bff'
+                }]
+              },
+              options: {
+                scales: {
+                  yAxes: [{
+                    ticks: {
+                      beginAtZero: false
+                    }
+                  }]
+                },
+                legend: {
+                  display: false
+                }
+              }
+            })
+          })()
+    
+          
+        }
+      }) 
+    })
+    
+    </script>

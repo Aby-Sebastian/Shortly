@@ -285,11 +285,17 @@ def edit(request):
 	return JsonResponse({'status':0})
 
 def dashboard(request):
-	
+	chart = Analytics.objects.filter().values('date__date').order_by('-date__date').annotate(sum=Sum('click'))
 	l_user = Links.objects.filter(user=request.user).order_by('-total_clicks')
 	l_all = Links.objects.aggregate(Sum('total_clicks'))['total_clicks__sum']
-	context = { 'l_all': l_all, 'l_user': l_user, 'top_3': l_user[:3]}
+	context = { 'l_all': l_all, 'l_user': l_user, 'top_3': l_user[:3], 'chart':chart}
 	return render(request, 'dashboard/dashboard.html', context=context)
+
+def dashboard_chart_api(request):
+	chart = Analytics.objects.filter().values('date__date').order_by('-date__date').annotate(sum=Sum('click'))
+	chart_label = [date__date for date__date in chart ]
+	chart_clicks = [sum for sum in chart]
+	return JsonResponse({'chart_label':chart_label, 'chart_clicks': chart_clicks})
 
 def settingsPage(request):
 	user = User.objects.get(pk=request.user.id)
@@ -526,7 +532,7 @@ def dashboard_or_analytics_chart(request):
 	
 	Analytics.objects.filter(date__date__gte=timezone.now().date()-timezone.timedelta(6), date__date__lte=timezone.now().date())
 	Analytics.objects.filter(date__date__gte=timezone.now().date()-timezone.timedelta(6), date__date__lte=timezone.now().date(),url=10).aggregate(Sum('click'))['click__sum']
-	'''will get and cound clicks of last 7 days'''
+	'''will get and count clicks of last 7 days'''
 	Analytics.objects.aggregate(Sum('click')) # total clicks happened using shortened urls
 	'''will return links raging from gte date to lte date'''
 	return JsonResponse({"hi":'hii'}) 

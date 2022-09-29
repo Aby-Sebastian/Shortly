@@ -43,7 +43,7 @@
           </div>
           
             <div id="shorturl{{link.id}}">
-              {% url 'index' %}{{link.short_url}}
+              {% url 'index' %}{{link.short_url|safe|escape}}
               
             </div> 
             <script type="text/javascript">

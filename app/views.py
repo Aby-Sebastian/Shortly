@@ -281,7 +281,7 @@ def dashboard(request):
 	return render(request, 'dashboard/dashboard.html', context=context)
 
 def dashboard_chart_api(request):
-	chart = Analytics.objects.filter().values('date__date').order_by('-date__date').annotate(sum=Sum('click'))
+	chart = Analytics.objects.filter().values('date__date').order_by('-date__date').annotate(sum=Sum('click'))[:7]
 	chart_label = [date['date__date'] for date in chart ]
 	chart_clicks = [sum['sum'] for sum in chart]
 	

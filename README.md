@@ -148,11 +148,11 @@ Note: Please change those gmail credentials from real_estate folder you will get
 -->
 - **Register**
 
-![Register](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/register1.png)
+![Register](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/register.png)
 
 - **Login**
 
-![Login](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/login1.png)
+![Login](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/login.png)
 
 - **Dashboard**
 

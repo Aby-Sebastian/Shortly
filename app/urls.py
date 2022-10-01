@@ -18,6 +18,7 @@ urlpatterns = [
     path('analytics_data/',views.analytics_data, name='analytics_data'),
 
     path('dashboard/',views.dashboard, name='dashboard'),
+    path('dashboard_chart/',views.dashboard_chart_api, name='dashboard_chart'),
     path('link_page/',views.page_link, name='link_page'),
     path('test_links/', views.test_links, name='test_links'),
     path('settings/', views.settingsPage, name='settings'),

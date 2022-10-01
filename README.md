@@ -139,22 +139,58 @@ This is the default configuration of Django database.
 For Database I have used Postgres Database Name: shortly
 
 Note: Please change those gmail credentials from real_estate folder you will get settings.py inside that file you will see username and password mentioned as place your Username and Password. Also do that same thing from Contacts folder views.py you will see YourEmail mentioned on line number 33.
-<!--
-### Screenshots
 
+### Screenshots
+<!--
 - **HOME**
 
 ![Home](https://github.com/TheCaffeineDev/Real-Estate-Django-Web-App/blob/master/screenshots/s1.JPG)
+-->
+- **Register**
 
-- **Listings** 
+![Register](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/register1.png)
+
+- **Login**
+
+![Login](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/login1.png)
+
+- **Dashboard**
+
+![Dashboard](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/dashboard1.png)
+
+![Dashboard](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/dashboard2.png)
+
+- **Links** 
 
 
-![Listings](https://github.com/TheCaffeineDev/Real-Estate-Django-Web-App/blob/master/screenshots/s3list.JPG)
+![Links](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/links1.png)
 
-- **Registration** 
+![Links](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/links2.png)
 
-![Registration](https://github.com/TheCaffeineDev/Real-Estate-Django-Web-App/blob/master/screenshots/s4reg.JPG)
+![Links](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/links3.png)
 
+![Links](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/links4.png)
+
+![Links](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/links5.png)
+
+![Links](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/links6.png)
+
+- **Tags** 
+
+![Tags](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/tags1.png)
+
+![Tags](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/tags2.png)
+
+- **Files** 
+
+![Files](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/files1.png)
+
+- **Settings** 
+
+![Settings](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/settings1.png)
+
+![Settings](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/settings2.png)
+<!--
 - **Admin Panel - 1**
 
 ![Admin](https://github.com/TheCaffeineDev/Real-Estate-Django-Web-App/blob/master/screenshots/s5adm.JPG)

@@ -52,7 +52,6 @@ def anonymous_save(request):
 		form = CreateLinkForm(request.POST)
 		if form.is_valid():
 			value=request.POST.get('inp_url')
-			print(value)
 			uid = str(uuid.uuid4())[:5]
 			
 			# user = get_object_or_404(User, username="AnonymousUser")
@@ -107,24 +106,22 @@ def go(request,pk):
 	else:
 		obj = get_object_or_404(Links, short_url=pk)
 		day = Analytics.objects.filter(url=obj,date__date=timezone.now().date()) # Check if someone checked this url today
-		print(day)
+		
 		if day:
 			"""
 			if someone checked url this day update click by one
 			"""
 			click = Analytics.objects.filter(url=obj,date__date=timezone.now().date()).update(click=F('click')+1,date=timezone.now())
-			# print(obj.increment_count())
+			
 			obj.increment_count()
 			obj.save()
-			print('click is: ',click)
-			print('if part success')
+			
 		else:
 			"""
 			if no one checked this url this day create new instance for this date
 			"""
 			click = Analytics(url=obj) 
 			click.save()	
-			print('else part')
 			click.url.increment_count()		# Increments url click count by 1
 			click.url.save(update_fields=['total_clicks'])				# saves b.url class
 
@@ -175,19 +172,16 @@ def user_ceated_links(request):
 		user creted links 
 	'''
 	if request.user.is_anonymous:
-		print('AnonymousUser')
-		print(request.user.is_anonymous)
+		
 		user_specific = Links.objects.filter(user=2)
 	else:
 		user_specific = Links.objects.filter(user=request.user.id)
 	form = CreateCustomLinkForm()
-	print('user created form')
 	if request.method == 'POST':
 		form = CreateCustomLinkForm(request.POST)
-		print('if portion')
+		
 		if form.is_valid():
 			lid = request.POST.get('sid')
-			print(lid)
 			value=form['url'].value()
 			short_url = form['short_url'].value()
 			expiration = timezone.now() + timezone.timedelta(days=30)
@@ -195,14 +189,14 @@ def user_ceated_links(request):
 				url_title = title_parser(value)
 			except:
 				url_title = 'No Page Found'
-			print("here-----",url_title)
+			
 			if lid == '':
 				custom_url = Links(url=value,short_url=short_url,expiration_date=expiration,user=request.user)
 			else:
 				custom_url = Links(id=lid,url=value,short_url=short_url,expiration_date=expiration,user=request.user)
 			custom_url.save()
 	else:
-		print('else portion')
+		
 		form = CreateCustomLinkForm()
 
 	context = {'user_links':user_specific, 'form':form}
@@ -232,11 +226,9 @@ def delete(request):
 def edit_links(request):
 	if request.method == 'POST':
 		id = request.POST.get('sid')
-		print('edit links --')
 		link = Links.objects.get(pk=id)
-		
 		tags = [tag.name for tag in link.tags.all()]
-		# print(tags)
+		
 		link_data = {'id':link.id, 'url':link.url, 'short_url':link.short_url, 'tags': tags}
 		return JsonResponse(link_data)
 	return JsonResponse({'status':0})
@@ -248,17 +240,12 @@ def edit(request):
 		edit method returns in json form
 	'''
 	if request.method == 'POST':
-		print('edit --')
+		
 		id = request.POST.get('id')
 		url = request.POST.get('url')
 		short_url = request.POST.get('short_url')
-		
-		
-		
-		
-		link = Links.objects.get(pk=id)
-		
 
+		link = Links.objects.get(pk=id)
 		sid = Links.objects.get(pk=id)
 		form = CreateCustomLinkForm(request.POST, instance=sid)
 		if form.is_valid():
@@ -284,6 +271,8 @@ def edit(request):
 	messages.error(request, form.errors)
 	return JsonResponse({'status':0})
 
+from django.core import serializers
+
 def dashboard(request):
 	chart = Analytics.objects.filter().values('date__date').order_by('-date__date').annotate(sum=Sum('click'))
 	l_user = Links.objects.filter(user=request.user).order_by('-total_clicks')
@@ -292,10 +281,11 @@ def dashboard(request):
 	return render(request, 'dashboard/dashboard.html', context=context)
 
 def dashboard_chart_api(request):
-	chart = Analytics.objects.filter().values('date__date').order_by('-date__date').annotate(sum=Sum('click'))
-	chart_label = [date__date for date__date in chart ]
-	chart_clicks = [sum for sum in chart]
-	return JsonResponse({'chart_label':chart_label, 'chart_clicks': chart_clicks})
+	chart = Analytics.objects.filter().values('date__date').order_by('-date__date').annotate(sum=Sum('click'))[:7]
+	chart_label = [date['date__date'] for date in chart ]
+	chart_clicks = [sum['sum'] for sum in chart]
+	
+	return JsonResponse({'chart_label':chart_label, 'chart_clicks':chart_clicks})
 
 def settingsPage(request):
 	user = User.objects.get(pk=request.user.id)
@@ -326,7 +316,7 @@ print(WEB_ADDRESS)
 
 def filesPage(request):
 	user_specific = Files.objects.filter(user=request.user.id).order_by('-uploaded_at')
-	print(request.path)
+	
 	if request.method == 'POST':
 		form = UploadFileForm(request.POST, request.FILES)
 		if form.is_valid():
@@ -362,19 +352,19 @@ def reg(request):
 
 def save_data(request):
 	if request.method == 'POST':
-		print('save --')
+
 		lid = request.POST.get('sid')
-		print('lid is first ',lid)
+		
 		if lid == '':
-			# print('if lid is ',lid)
+			
 			form = CreateCustomLinkForm(request.POST)
 		else:
-			print('else lid is ',lid)
+			
 			linkid = Links.objects.get(pk=lid)
 			form = CreateCustomLinkForm(request.POST, instance=linkid)
 		
 		uid = str(uuid.uuid4())[:5]
-		print(form.errors)
+		
 		if form.is_valid():
 			value=request.POST['url']
 			short_url = request.POST['short_url']
@@ -386,14 +376,12 @@ def save_data(request):
 				title_url=title_parser(value)
 			except:
 				title_url = "No Page Found"
-			print('working - ',title_url)
+			
 			if lid == '':
 				custom_url = Links(url=value,short_url=short_url, url_title=title_url, expiration_date=expiration,user=request.user)
 				custom_url.save()
 			else:
 				inst = Links.objects.filter(pk=lid) # Instance
-				print(' inst is ',inst)
-				print(' ')
 
 				inst.update(url=value,short_url=short_url,expiration_date=expiration, url_title=title_url)
 
@@ -426,28 +414,23 @@ def test_links(request):
 	page_number = request.GET.get('page')
 	page_obj = paginator.get_page(page_number)
 	sform = CreateCustomLinkForm()
-	print('-----in start mode -----')
+	
 	if request.method == 'POST':
 		form = CreateCustomLinkForm(request.POST)
-		print('----- in post -----')
+		
 		url=request.POST.get('url')
 
 		short_url = request.POST.get('short_url')
 		if short_url == '':
 				uid = str(uuid.uuid4())[:5]
 				short_url = uid
-		print(url, short_url)
-		print(form.errors)
 
-		for field in form:
-			print("Field Error:", field.name,field.value(),  field.errors)
+		
 		if form.is_valid():
-			print('----- its valid -----')
+			
 			url=request.POST.get('url')
 			short_url = request.POST.get('short_url')
-			# tags = form['tags'].value()
-			# print('tags are ',tags)
-			print('here - ',len(short_url))
+			
 			if short_url == '':
 				uid = str(uuid.uuid4())[:5]
 				short_url = uid
@@ -457,14 +440,12 @@ def test_links(request):
 				title_url=title_parser(url)
 			except:
 				title_url = "No Page Found"
-			# print(title_url)
 			
 			custom_url = Links(url=url,short_url=slugify(short_url), url_title=title_url, expiration_date=expiration,user=request.user)
 			obj = form.save(commit=False)
 			obj.user = request.user
 			obj.expiration_date = expiration
 			obj.short_url = short_url
-			print(obj.total_clicks, '-------------------')
 			obj.url_title = title_url
 			obj.save()
 			# Without this next line the tags won't be saved.
@@ -496,25 +477,12 @@ def post_list(request, tag_slug=None):
 	if tag_slug:
 		tag = get_object_or_404(Tag, slug=tag_slug)
 		z=Links.objects.filter(user=request.user.id)
-		posts = z.filter(tags__in=[tag])
-		print(posts)
-	
+		posts = z.filter(tags__in=[tag])	
 	
 	return render(request,'dashboard/post_list.html',{'posts':posts, 'tag':tag})
 
 def ind(request):
 	return render(request, 'main/indexa.html')
-
-
-def chart(request):
-	z=Links.objects.filter(user=1)
-	[val.name for i,val in enumerate(z.last().tags.all())]
-	['test', 'ngrok']
-	z.values('tags').distinct()
-
-	pass
-
-
 	
 # page link layout
 def page_link(request):
@@ -542,20 +510,14 @@ def analytics(request):
 		Analytics data for links page for chart
 	'''
 	obj = request.GET.get('url')
-	print(obj)
 	link = Links.objects.get(id=obj)
-	print(link)
 	s = Analytics.objects.filter(url=link)
-	print(s)
 	x=list(map(mnb,s))
-	print('x is ',x)
 	labels = []
 	data = []
 	for i in range(len(x)):
 		labels.append(x[i][0])
 		data.append(x[i][1])
-	print(labels)
-	print(data)
 
 	return JsonResponse({'status': x, 'id': obj, 'labels': labels, 'data': data})
 

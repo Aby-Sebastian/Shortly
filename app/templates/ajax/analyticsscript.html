@@ -1,7 +1,7 @@
 <script>
     
 $('.analytics').click(function() {
-  console.log('analytics started');
+  
   let id = $(this).attr("data-sid")
 
 
@@ -16,9 +16,7 @@ $('.analytics').click(function() {
     data: mydata,
     // dataType: 'json',
     success: function (data) {
-      console.log(data)
-      console.log(data.id)
-      console.log('analytics ended');
+      
       // $('#editLinkoffcanvasRight').offcanvas('hide');
       // $(`#card${data.id}`).load(` #card${data.id} > `);
 

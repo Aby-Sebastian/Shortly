@@ -1,22 +1,22 @@
 <script>
     $(".btn-edit").click(function () {
-    console.log('clicked on Edit button');
+    
     let id = $(this).attr("data-sid")
     let csr = $("input[name=csrfmiddlewaretoken]").val();
     mydata = { sid:id, csrfmiddlewaretoken:csr }
-    console.log(mydata);
+    
     $.ajax({
         url: "{% url 'edit' %}",
         method: 'POST',
         data: mydata,
         dataType: "json",
         success: function (data) {
-          console.log(data)
+          
           $('#linkid').val(data.id)
           $('#editurl').val(data.url);
           $('#editshort_url').val(data.short_url);
           $('#edittag').val(data.tags);
-          console.log(data.tag);
+          
           if (data.status == 1) {
             $('#editLinkoffcanvasRight').offcanvas('hide');
             // $(`#card${data.id}`).fadeOut()
@@ -33,7 +33,7 @@
     })
 });
 $('.edit-save-btn').click(function() {
-  console.log('edit started');
+  
   let lid = $('#linkid').val();
   let csr = $("input[name=csrfmiddlewaretoken]").val();
   let ur = $('#editurl').val();
@@ -46,7 +46,7 @@ $('.edit-save-btn').click(function() {
     data: mydata,
     dataType: 'json',
     success: function (data) {
-      console.log(data.messages)
+      
 
       // create a new div element
       const newDiv = document.createElement("div");
@@ -63,7 +63,7 @@ $('.edit-save-btn').click(function() {
       const currentDiv = document.getElementById("top");
       currentDiv.after(newDiv);
 
-      console.log('edit ended');
+      
       $('#editLinkoffcanvasRight').offcanvas('hide');
       $(`#card${data.id}`).load(` #card${data.id} > `);
     }

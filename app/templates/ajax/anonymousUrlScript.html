@@ -2,12 +2,12 @@
 <script>
     
 $('#btn-shorten').click(function() {
-  console.log('shorten started');
+  
   let inp_url = $('input[name=url]').val();
   let csr = $("input[name=csrfmiddlewaretoken]").val();
   // let ur = $('#editurl').val();
   // let sh = $('#editshort_url').val();
-  console.log(inp_url=='');
+  
   if(inp_url==''){
     // console.log('yep');
     alert('Enter url');
@@ -19,7 +19,7 @@ $('#btn-shorten').click(function() {
       data: mydata,
       dataType: 'json',
       success: function (data) {
-        console.log(data)
+        
         // create a new div element
         const newDiv = document.createElement("div");
         const secDiv = document.createElement("div");

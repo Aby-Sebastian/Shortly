@@ -23,17 +23,17 @@
   
 //   }
 
-console.log('starting');
+
 
 const copyBtns = [...document.getElementsByClassName('copy-btn')]
-console.log('copy btn pressed.');
+
 
 let previous = null;
 
 copyBtns.forEach(btn => btn.addEventListener('click', () => {
-  console.log('clicked');
+  
   const link = btn.getAttribute('data-link')
-  // console.log(link);
+  
   navigator.clipboard.writeText(link)
   btn.textContent = "Copied";
 

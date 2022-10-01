@@ -159,18 +159,19 @@
   <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
     integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
     crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
     integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
     crossorigin="anonymous"></script>
-  <script src="{% static 'js/dashboard.js' %}"></script>
+  <script src="{% static 'js/dashboard.js' %}"></script> -->
   <script>
+    feather.replace();
     
     // Deleting Data
     $(".btn-file-delete").click(function () {
-    console.log('clicked on Delete');
+    
     let id = $(this).attr("data-sid")
     let csr = $("input[name=csrfmiddlewaretoken]").val();
-    console.log(id);
+
     mydata = { sid:id, csrfmiddlewaretoken:csr }
     $.ajax({
         url: "{% url 'delete_file' %}",
@@ -189,7 +190,7 @@
         })
     });
   </script>
-  <script src="{% static 'js/copy.js' %}"></script>
+  <!-- <script src="{% static 'js/copy.js' %}"></script> -->
   
 </body>
 

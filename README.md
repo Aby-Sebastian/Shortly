@@ -16,6 +16,7 @@ A simple, reponsive  website. Built with:
 
 ## Features
 
+- ability to shorten url as anonymous user from index page
 - URL shortening
 - ability to customize the shortened URL
 - shows analytic data in charts based on clicks on short urls
@@ -24,6 +25,7 @@ A simple, reponsive  website. Built with:
 - can add Tags to categoriza links
 - search functionality
 - authentication
+- shows last 7 days total clicks in dashboard
 
 ## How to run this project (Ubuntu 18.04)
 

@@ -202,18 +202,6 @@ def user_ceated_links(request):
 	context = {'user_links':user_specific, 'form':form}
 	return render(request,'user/user_links.html',context=context)
 
-def reset_short_url(request):
-	pass
-
-@login_required(login_url='login')
-def showall(request):
-	data = Links.objects.all().order_by('-date_created')
-	return render(request, 'main/show_links.html',{'data':data})
-
-def showallusers(request):
-	users = User.objects.filter(is_staff=False)
-	return render(request,'user/show_users.html', {'data':users})
-
 def delete(request):
 	
 	if request.method == 'POST':
@@ -242,7 +230,6 @@ def edit(request):
 	if request.method == 'POST':
 		
 		id = request.POST.get('id')
-		url = request.POST.get('url')
 		short_url = request.POST.get('short_url')
 
 		link = Links.objects.get(pk=id)
@@ -340,15 +327,6 @@ def deleteFile(request):
 		file.delete()
 		return JsonResponse({'status':1, 'id':id})
 	return JsonResponse({'status':0})
-
-def temp(request):
-	return render(request, 'dashboard/temp.html')
-
-def log(request):
-	return render(request, 'user/login.html')
-
-def reg(request):
-	return render(request, 'user/register.html')
 
 def save_data(request):
 	if request.method == 'POST':
@@ -480,18 +458,6 @@ def post_list(request, tag_slug=None):
 		posts = z.filter(tags__in=[tag])	
 	
 	return render(request,'dashboard/post_list.html',{'posts':posts, 'tag':tag})
-
-def ind(request):
-	return render(request, 'main/indexa.html')
-	
-# page link layout
-def page_link(request):
-
-	return render(request,'dashboard/link_page.html')
-# Clear up code to understand it better
-
-def analytics_data(request):
-	return render(request, 'components/analytics.html')
 
 def mnb(i):
 	return i.date.date(), i.click

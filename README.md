@@ -13,6 +13,7 @@ A simple, reponsive  website. Built with:
 - Bootstrap 4 🌈
 - Vanilla JS - ES6
 - JQuery
+- ChartJS
 
 ## Features
 
@@ -141,11 +142,11 @@ For Database I have used Postgres Database Name: shortly
 Note: Please change those gmail credentials from real_estate folder you will get settings.py inside that file you will see username and password mentioned as place your Username and Password. Also do that same thing from Contacts folder views.py you will see YourEmail mentioned on line number 33.
 
 ### Screenshots
-<!--
+
 - **HOME**
 
-![Home](https://github.com/TheCaffeineDev/Real-Estate-Django-Web-App/blob/master/screenshots/s1.JPG)
--->
+![Home](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/index_page.jpg)
+
 - **Register**
 
 ![Register](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/register1.png)

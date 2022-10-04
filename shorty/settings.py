@@ -57,6 +57,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'shorty.urls'
@@ -96,6 +99,13 @@ DATABASES = {
     }
 }
 
+# Cache
+CACHES = {
+   'default': {
+      'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+      'LOCATION': '127.0.0.1:11211',
+   }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

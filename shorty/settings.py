@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'files',
     'analytics',
     'taggit',
+    'gallery',
     'debug_toolbar',
 ]
 

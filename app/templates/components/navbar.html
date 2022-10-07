@@ -32,7 +32,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if request.path == gallery %}active{% endif %}" href="{% url 'gallery:gallery' %}">
+          <a class="nav-link {% if request.path == '/gallery/' %}active{% endif %}" href="{% url 'gallery' %}">
             <span data-feather="image"></span>
             Gallery
           </a>

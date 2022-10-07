@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from gallery.views import gallery
+from gallery.views import gallery, delete_img
 
 urlpatterns = [
     path('',views.home,name='index'),
@@ -21,6 +21,7 @@ urlpatterns = [
     path('file/<str:pk>/', views.fileShare, name='fileshare'),
 
     path('gallery/',gallery, name="gallery"),
+    path('delete_img/',delete_img, name="delete_img"),
 
     path('links/',views.user_ceated_links, name='user_created_links'), # Test link
     path('delete/',views.delete,name='delete'),

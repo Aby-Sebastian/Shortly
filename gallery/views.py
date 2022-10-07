@@ -13,8 +13,18 @@ def gallery(request):
 		if form.is_valid():
 			form.save()
 
-			return HttpResponseRedirect('gallery')
+			return HttpResponseRedirect('/gallery')
 	else:
 		form = GalleryForm()
 	return render(request, 'dashboard/gallery.html', {'form': form, 'data': data})
 
+
+def delete_img(request):
+	if request.method == 'POST':
+		key = request.POST.get('id')
+		try:
+			obj = Gallery.objects.get(id=key)
+			obj.delete()
+		except Exception as e:
+			raise
+	return HttpResponseRedirect('/gallery')

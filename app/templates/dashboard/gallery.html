@@ -5,6 +5,94 @@ Gallery | Shortly
 {% endblock title %}
 
 {% block main %}
-<h2>Gallery</h2>
-<p>image uploading in here</p>
+
+    <div
+      class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2">Gallery</h1>
+      
+    </div>
+
+    
+    <!-- end of card -->
+
+    <!-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> -->
+    <!-- Messages and warnings -->
+    
+    {% if messages %}
+    
+    {% for message in messages %}
+    <div {% if "error" in message.tags %} class="alert alert-danger" {% else %} class="alert alert-{{ message.tags }}" {% endif %} id="message">
+      <ul>
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      </ul>
+    </div>
+    {% endfor %}
+    
+    {% endif %}
+  
+
+  <!-- message section end -->
+    <!-- start main -->
+    
+    <form method="post" class="d-flex" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      {{form.image}}
+      {{form.alt}}
+    <!-- <input type="file" name="files" id="" class="form-control me-2" placeholder="Create new files "> -->
+    <input type="Submit" value="Submit" class="btn btn-primary">
+    </form>
+
+    {% for file in data %}
+
+    <div class="card" id="card{{file.id}}">
+      <div class="card-body">
+        <div class="row">
+          <p class="card-title col-6 mt-2">
+            <a href="{{file.document.url}}" class="text-dark text-decoration-none" target="_blank">{{file.document.name}}</a>
+          </p>
+          <div class="date col-2 mt-2 text-end">{{file.get_size}}</div>
+          <div class="date col-2 mt-2 text-end">{{file.uploaded_at.date}}</div>
+          <div class="dropdown col-2 text-end">
+            <a class="btn btn-sm me-md-2 " href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                <path
+                  d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+              </svg>
+            </a>
+            <!-- <button class="btn btn-primary btn-sm">Edit</button> -->
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li><a class="btn btn-primary dropdown-item" id="editContactModal" data-catid="{{data.pk}}" data-bs-toggle="modal" data-bs-target="#editModal">
+                QR code
+              </a></li>
+              <li><a href="{{file.document.url}}" class="btn btn-primary dropdown-item btn-delete" download="{{file.document.url}}">
+                Download
+              </a></li>
+              
+              <li><a class="btn btn-primary dropdown-item" data-bs-toggle="modal" data-bs-target="#fileModal{{file.id}}">
+                Delete
+              </a></li>
+              
+              <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+              <li><a class="btn btn-primary dropdown-item" id="editContactModal" data-catid="{{file.pk}}" data-bs-toggle="modal" data-bs-target="#shareModal{{file.id}}">
+                Share
+              </a></li>
+              <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include "components/deleteFileModal.html" %}
+    {% include "components/shareFileModal.html" %}
+    {% endfor %}
+
+
+    <!-- end main -->
+    
+
+
+
 {% endblock main %}

@@ -260,6 +260,7 @@ def edit(request):
 
 from django.core import serializers
 
+@login_required(login_url='login')
 def dashboard(request):
 	chart = Analytics.objects.filter().values('date__date').order_by('-date__date').annotate(sum=Sum('click'))
 	l_user = Links.objects.filter(user=request.user).order_by('-total_clicks')
@@ -267,6 +268,7 @@ def dashboard(request):
 	context = { 'l_all': l_all, 'l_user': l_user, 'top_3': l_user[:3], 'chart':chart}
 	return render(request, 'dashboard/dashboard.html', context=context)
 
+@login_required(login_url='login')
 def dashboard_chart_api(request):
 	chart = Analytics.objects.filter().values('date__date').order_by('-date__date').annotate(sum=Sum('click'))[:7]
 	chart_label = [date['date__date'] for date in chart ]
@@ -274,10 +276,12 @@ def dashboard_chart_api(request):
 	
 	return JsonResponse({'chart_label':chart_label, 'chart_clicks':chart_clicks})
 
+@login_required(login_url='login')
 def settingsPage(request):
 	user = User.objects.get(pk=request.user.id)
 	return render(request, 'dashboard/settings.html', {'user':user})
 
+@login_required(login_url='login')
 def tagsPage(request):
 	# tags = Tag.objects.all()
 	z=Links.objects.filter(user=request.user.id)
@@ -301,6 +305,7 @@ print(WEB_ADDRESS)
 # 	canvas.close()
 # 	return self.qr_code
 
+@login_required(login_url='login')
 def filesPage(request):
 	user_specific = Files.objects.filter(user=request.user.id).order_by('-uploaded_at')
 	
@@ -318,6 +323,7 @@ def filesPage(request):
 		form = UploadFileForm()
 	return render(request, 'dashboard/files.html', {'form': form, 'data': user_specific})
 
+@login_required(login_url='login')
 def deleteFile(request):
 	
 	if request.method == 'POST':
@@ -328,6 +334,7 @@ def deleteFile(request):
 		return JsonResponse({'status':1, 'id':id})
 	return JsonResponse({'status':0})
 
+@login_required(login_url='login')
 def save_data(request):
 	if request.method == 'POST':
 
@@ -371,7 +378,7 @@ def save_data(request):
 			return JsonResponse({'status': 0})
 
 
-
+@login_required(login_url='login')
 def qr_code(request, short_url):
 	'''Creates QR code each time this function is called '''
 	context = {}
@@ -383,7 +390,7 @@ def qr_code(request, short_url):
 		context["svg"] = stream.getvalue().decode()
 	return render(request, "qrModal.html", context=context)
 
-
+@login_required(login_url='login')
 def test_links(request):
 	''' Links page section '''
 	user_specific = Links.objects.filter(user=request.user.id).order_by('-date_created')
@@ -438,6 +445,7 @@ def test_links(request):
 	context = {'data': page_obj, 'form':sform}
 	return render(request, 'dashboard/links.html', context)
 
+@login_required(login_url='login')
 def search(request):
 	''' Returns search results from Links model that contains query '''
 	query = request.GET.get('q')
@@ -447,7 +455,7 @@ def search(request):
 	return render(request, 'dashboard/search_results.html',{'object_list':object_list})
 
 
-
+@login_required(login_url='login')
 def post_list(request, tag_slug=None):
 	
 	# post tag
@@ -462,6 +470,7 @@ def post_list(request, tag_slug=None):
 def mnb(i):
 	return i.date.date(), i.click
 
+@login_required(login_url='login')
 def dashboard_or_analytics_chart(request):
 	
 	Analytics.objects.filter(date__date__gte=timezone.now().date()-timezone.timedelta(6), date__date__lte=timezone.now().date())
@@ -471,6 +480,7 @@ def dashboard_or_analytics_chart(request):
 	'''will return links raging from gte date to lte date'''
 	return JsonResponse({"hi":'hii'}) 
 
+@login_required(login_url='login')
 def analytics(request):
 	'''
 		Analytics data for links page for chart

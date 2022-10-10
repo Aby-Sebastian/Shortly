@@ -188,6 +188,10 @@ Note: Please change those gmail credentials from real_estate folder you will get
 
 ![Files](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/files1.png)
 
+- **Gallery** 
+
+![Gallery](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/gallery1.png)
+
 - **Settings** 
 
 ![Settings](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/settings1.png)

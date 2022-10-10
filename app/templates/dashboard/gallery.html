@@ -33,26 +33,40 @@ Gallery | Shortly
 
   <!-- message section end -->
     <!-- start main -->
-    
-    <form method="post" class="d-flex" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" class="form-control">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="id_image" class="form-label">Upload image</label>
+        <!-- <input type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> -->
+        {{form.image}}
+        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+      </div>
+      <div class="mb-3">
+        <label for="id_alt" class="form-label">Alt text for Image</label>
+        <!-- <input type="password" class="form-control" id="exampleInputPassword1"> -->
+        {{form.alt}}
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <!-- <form method="post" class="d-flex" enctype="multipart/form-data">
       {% csrf_token %}
 
       {{form.image}}
       {{form.alt}}
-    <!-- <input type="file" name="files" id="" class="form-control me-2" placeholder="Create new files "> -->
     <input type="Submit" value="Submit" class="btn btn-primary">
-    </form>
-
+    </form> -->
+<hr>
     {% for file in data %}
 
     <div class="card" id="card{{file.id}}">
       <div class="card-body">
         <div class="row">
           <p class="card-title col-6 mt-2">
-            <a href="{{file.document.url}}" class="text-dark text-decoration-none" target="_blank">{{file.document.name}}</a>
+            <a href="{{file.image.url}}" class="text-dark text-decoration-none" target="_blank">{{file.image.name}}</a>
           </p>
-          <div class="date col-2 mt-2 text-end">{{file.get_size}}</div>
           <div class="date col-2 mt-2 text-end">{{file.uploaded_at.date}}</div>
+          <div class="date col-2 mt-2 text-end">{{file.get_size}}</div>
           <div class="dropdown col-2 text-end">
             <a class="btn btn-sm me-md-2 " href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
               aria-expanded="false">
@@ -64,10 +78,10 @@ Gallery | Shortly
             </a>
             <!-- <button class="btn btn-primary btn-sm">Edit</button> -->
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <li><a class="btn btn-primary dropdown-item" id="editContactModal" data-catid="{{data.pk}}" data-bs-toggle="modal" data-bs-target="#editModal">
+              <!-- <li><a class="btn btn-primary dropdown-item" id="editContactModal" data-catid="{{data.pk}}" data-bs-toggle="modal" data-bs-target="#editModal">
                 QR code
-              </a></li>
-              <li><a href="{{file.document.url}}" class="btn btn-primary dropdown-item btn-delete" download="{{file.document.url}}">
+              </a></li> -->
+              <li><a href="{{file.image.url}}" class="btn btn-primary dropdown-item btn-delete" download="{{file.image.url}}">
                 Download
               </a></li>
               
@@ -76,23 +90,19 @@ Gallery | Shortly
               </a></li>
               
               <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
-              <li><a class="btn btn-primary dropdown-item" id="editContactModal" data-catid="{{file.pk}}" data-bs-toggle="modal" data-bs-target="#shareModal{{file.id}}">
+              <!-- <li><a class="btn btn-primary dropdown-item" id="editContactModal" data-catid="{{file.pk}}" data-bs-toggle="modal" data-bs-target="#shareModal{{file.id}}">
                 Share
-              </a></li>
+              </a></li> -->
               <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
             </ul>
           </div>
         </div>
       </div>
     </div>
-    {% include "components/deleteFileModal.html" %}
-    {% include "components/shareFileModal.html" %}
+    {% include "components/deleteImageModal.html" %}
+    
     {% endfor %}
 
-
     <!-- end main -->
-    
-
-
 
 {% endblock main %}

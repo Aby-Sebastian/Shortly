@@ -15,3 +15,11 @@ class Gallery(models.Model):
 	def __str__(self):
 		return self.alt
 		
+	def get_size(self):
+		val = self.image.size
+		for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
+			if val < 1024.0:
+				return "%3.1f %s" % (val, x)
+			val /= 1024.0
+
+		return val

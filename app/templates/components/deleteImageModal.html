@@ -1,0 +1,25 @@
+
+
+<!-- Modal -->
+<div class="modal fade" id="fileModal{{file.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Image</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {{file.image}}
+        </div>
+        <div class="modal-footer">
+            <form action="{% url 'delete_img' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" value="{{file.id}}" name="id">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary" value="Delete">
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

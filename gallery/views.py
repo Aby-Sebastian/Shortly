@@ -25,6 +25,7 @@ def delete_img(request):
 		try:
 			obj = Gallery.objects.get(id=key)
 			obj.delete()
+			print('done')
 		except Exception as e:
 			raise
 	return HttpResponseRedirect('/gallery')

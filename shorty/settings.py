@@ -126,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://9c25-103-148-21-76.ngrok.io']
+CSRF_TRUSTED_ORIGINS = []
 
 WEB_ADDRESS = "127.0.0.1:8000/"
 # Internationalization

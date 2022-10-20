@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -23,7 +24,7 @@ def registerUser(request):
 			send_mail(subject, message, email_from, recipient_list)
 
 			messages.success(request, message=f'Welcome {username}, Your Account is created now')
-			return redirect('login')
+			return HttpResponseRedirect('/account/login')
 	else:
 		form = CreateUserForm()
 	context={'form':form}
@@ -42,7 +43,7 @@ def loginPage(request):
 			return redirect('dashboard')
 		else:
 			messages.info(request, message='Username or Password is incorrect')
-			return redirect('login')
+			return HttpResponseRedirect('/account/login')
 	context = {}
 	return render(request, 'main/login.html',context=context)
 

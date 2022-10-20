@@ -108,7 +108,7 @@ And you are good to go.
 
 **To run with SQLite only**
 
-Go inside the 'realestate' folder and open 'settings.py' file and replace
+Go inside the 'shortly' folder and open 'settings.py' file and replace
 
 ```sh
 DATABASES = {

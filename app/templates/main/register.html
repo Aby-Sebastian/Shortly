@@ -10,7 +10,7 @@
     <title>Signin Template · Bootstrap v5.0</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
-
+    <link rel="shortcut icon" href="{%  static 'favicon/favicon.ico' %}">
     
 
     <!-- Bootstrap core CSS -->
@@ -69,6 +69,24 @@
       <!-- <input type="password" class="form-control" id="floatingPassword" name="password2" placeholder="Password"> -->
       {{form.date_joined}}
     </div>
+    
+            <!-- Messages and warnings -->
+        
+            {% if messages %}
+        
+            {% for message in messages %}
+            <div {% if "error" in message.tags %} class="alert alert-danger" {% else %} class="alert alert-{{ message.tags }}" {% endif %} id="message">
+              <ul>
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+              </ul>
+            </div>
+            {% endfor %}
+            
+            {% endif %}
+            
+            
+    
+          <!-- message section end -->
     
     {{form.errors}}
 

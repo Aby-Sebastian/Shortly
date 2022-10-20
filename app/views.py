@@ -23,6 +23,7 @@ from django.utils.text import slugify
 from django.db.models import Q, F
 from django.db.models import Sum
 from django.views.generic import TemplateView
+from django.views.decorators.cache import cache_page
 # Create your views here.
 
 def home(request):
@@ -390,6 +391,7 @@ def qr_code(request, short_url):
 		context["svg"] = stream.getvalue().decode()
 	return render(request, "qrModal.html", context=context)
 
+@cache_page(60)
 @login_required(login_url='login')
 def test_links(request):
 	''' Links page section '''

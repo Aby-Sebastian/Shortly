@@ -10,11 +10,14 @@ from .forms import GalleryForm
 @login_required(login_url='login')
 def gallery(request):
 	data = Gallery.objects.filter(user=request.user.id)
-	
 	if request.method == 'POST':
+		print('post')
 		form = GalleryForm(request.POST, request.FILES)
+		print(form)
 		if form.is_valid():
-			form.save()
+			obj = form.save(commit=False)
+			obj.user = request.user
+			obj.save()
 			
 			messages.success(request, 'Image uploaded successfully.')
 			return HttpResponseRedirect('/gallery')

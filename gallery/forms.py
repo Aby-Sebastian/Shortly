@@ -7,4 +7,4 @@ class GalleryForm(forms.ModelForm):
 
 	class Meta:
 		model = Gallery
-		fields = ['image', 'alt']
+		fields = ('image', 'alt', 'user')

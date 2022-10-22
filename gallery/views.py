@@ -9,7 +9,7 @@ from .forms import GalleryForm
 
 @login_required(login_url='login')
 def gallery(request):
-	data = Gallery.objects.all()
+	data = Gallery.objects.filter(user=request.user.id)
 	
 	if request.method == 'POST':
 		form = GalleryForm(request.POST, request.FILES)

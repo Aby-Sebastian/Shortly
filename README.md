@@ -147,7 +147,7 @@ Note: Please change those gmail credentials from real_estate folder you will get
 
 - **HOME**
 
-![Home](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/index_page.jpg)
+![Home](https://github.com/Aby-Sebastian/Shortly/blob/main/screenshots/index_page.png)
 
 - **Register**
 

@@ -23,3 +23,7 @@ class Gallery(models.Model):
 			val /= 1024.0
 
 		return val
+	
+	def save(self, *args, **kwargs):
+		
+		super(Gallery, self).save(*args, **kwargs)

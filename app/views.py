@@ -9,9 +9,12 @@ from django.core.paginator import Paginator
 
 from django.utils import timezone
 import uuid
+import geoip2.database as database
+import geoip2.errors as err
 import qrcode
 import qrcode.image.svg
 from io import BytesIO
+from device_detector import SoftwareDetector
 from .forms import CreateLinkForm, CreateCustomLinkForm
 from files.forms import UploadFileForm
 from .models import Links, Customer
@@ -23,7 +26,7 @@ from django.utils.text import slugify
 from django.db.models import Q, F
 from django.db.models import Sum
 from django.views.generic import TemplateView
-from django.views.decorators.cache import cache_page
+from django.views.decorators.cache import cache_page, never_cache
 # Create your views here.
 
 def home(request):
@@ -76,18 +79,20 @@ def get_client_ip(request):
 		ip = request.META.get('REMOTE_ADDR')
 	return ip
 
-# def get_country_from_IP(ip_address):
-# 	reader = geoip2.database.Reader('./GeoLite2-Country/GeoLite2-Country.mmdb')
-# 	try:
-# 		response = reader.country(ip_address)
-# 		country_name = response.country.name
 
-# 	except geoip2.errors.AddressNotFoundError:
-# 		print("Its localhost you idiot")
-# 		country_name = 'India'
+def get_country_from_IP(ip_address):
+	try:
+		reader = database.Reader('./GeoLite2-Country/GeoLite2-Country.mmdb')
+	
+		response = reader.country(ip_address)
+		country_name = response.country.name
 
-# 	reader.close()
-# 	return country_name
+	except err.AddressNotFoundError:
+		print("Its localhost you idiot")
+		country_name = 'India'
+
+	reader.close()
+	return country_name
 
 from files.models import Files
 
@@ -108,6 +113,31 @@ def go(request,pk):
 		obj = get_object_or_404(Links, short_url=pk)
 		day = Analytics.objects.filter(url=obj,date__date=timezone.now().date()) # Check if someone checked this url today
 		
+		ua = request.headers.get('User-Agent')
+		print("--------------From Here----------------")
+		print(ua)
+		# Parse UA string and load data to dict of 'os', 'client', 'device' keys
+		device = SoftwareDetector(ua).parse()
+		link_ip = get_client_ip(request)
+		country = get_country_from_IP(link_ip)
+
+		print(device.client_name())        # >>> Chrome Mobile
+		
+		print(device.client_type())        # >>> browser
+		print(device.client_version())     # >>> 58.0.3029.83
+
+		print(device.os_name())     # >>> Android
+		print(device.os_version())  # >>> 6.0
+		# device.engine()      # >>> WebKit
+
+		# print(device.device_brand_name())  # >>> ''
+		print(device.device_brand())       # >>> ''
+		print(device.device_model())       # >>> ''
+		print(device.device_type()) 
+		print(device)
+		print(link_ip)
+		print(country)
+
 		if day:
 			"""
 			if someone checked url this day update click by one
@@ -165,43 +195,8 @@ def title_parser(url):
 	page = urlopen(req)
 	p = parse(page)
 	result = p.find(".//title").text
-	print(result)
 	return result
 
-def user_ceated_links(request):
-	''' 
-		user creted links 
-	'''
-	if request.user.is_anonymous:
-		
-		user_specific = Links.objects.filter(user=2)
-	else:
-		user_specific = Links.objects.filter(user=request.user.id)
-	form = CreateCustomLinkForm()
-	if request.method == 'POST':
-		form = CreateCustomLinkForm(request.POST)
-		
-		if form.is_valid():
-			lid = request.POST.get('sid')
-			value=form['url'].value()
-			short_url = form['short_url'].value()
-			expiration = timezone.now() + timezone.timedelta(days=30)
-			try:
-				url_title = title_parser(value)
-			except:
-				url_title = 'No Page Found'
-			
-			if lid == '':
-				custom_url = Links(url=value,short_url=short_url,expiration_date=expiration,user=request.user)
-			else:
-				custom_url = Links(id=lid,url=value,short_url=short_url,expiration_date=expiration,user=request.user)
-			custom_url.save()
-	else:
-		
-		form = CreateCustomLinkForm()
-
-	context = {'user_links':user_specific, 'form':form}
-	return render(request,'user/user_links.html',context=context)
 
 def delete(request):
 	
@@ -262,6 +257,7 @@ def edit(request):
 from django.core import serializers
 
 @login_required(login_url='login')
+@never_cache
 def dashboard(request):
 	chart = Analytics.objects.filter().values('date__date').order_by('-date__date').annotate(sum=Sum('click'))
 	l_user = Links.objects.filter(user=request.user).order_by('-total_clicks')

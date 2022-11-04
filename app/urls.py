@@ -23,7 +23,6 @@ urlpatterns = [
     path('gallery/',gallery, name="gallery"),
     path('delete_img/',delete_img, name="delete_img"),
 
-    path('links/',views.user_ceated_links, name='user_created_links'), # Test link
     path('delete/',views.delete,name='delete'),
     path('delete_file/',views.deleteFile,name='delete_file'),
     path('edit/',views.edit_links,name='edit'), # Json resp+

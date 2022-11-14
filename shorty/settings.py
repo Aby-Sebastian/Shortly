@@ -126,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:8000/']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8000/','https://bbca-103-165-167-30.ngrok.io']
 
 WEB_ADDRESS = "127.0.0.1:8000/"
 # Internationalization

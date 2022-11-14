@@ -114,29 +114,28 @@ def go(request,pk):
 		day = Analytics.objects.filter(url=obj,date__date=timezone.now().date()) # Check if someone checked this url today
 		
 		ua = request.headers.get('User-Agent')
-		print("--------------From Here----------------")
-		print(ua)
-		# Parse UA string and load data to dict of 'os', 'client', 'device' keys
-		device = SoftwareDetector(ua).parse()
-		link_ip = get_client_ip(request)
-		country = get_country_from_IP(link_ip)
-
-		print(device.client_name())        # >>> Chrome Mobile
 		
-		print(device.client_type())        # >>> browser
-		print(device.client_version())     # >>> 58.0.3029.83
+		# Parse UA string and load data to dict of 'os', 'client', 'device' keys
+		# device = SoftwareDetector(ua).parse()
+		# link_ip = get_client_ip(request)
+		# country = get_country_from_IP(link_ip)
 
-		print(device.os_name())     # >>> Android
-		print(device.os_version())  # >>> 6.0
+		# print(device.client_name())        # >>> Chrome Mobile
+		
+		# print(device.client_type())        # >>> browser
+		# print(device.client_version())     # >>> 58.0.3029.83
+
+		# print(device.os_name())     # >>> Android
+		# print(device.os_version())  # >>> 6.0
 		# device.engine()      # >>> WebKit
 
 		# print(device.device_brand_name())  # >>> ''
-		print(device.device_brand())       # >>> ''
-		print(device.device_model())       # >>> ''
-		print(device.device_type()) 
-		print(device)
-		print(link_ip)
-		print(country)
+		# print(device.device_brand())       # >>> ''
+		# print(device.device_model())       # >>> ''
+		# print(device.device_type()) 
+		# print(device)
+		# print(link_ip)
+		# print("country is : ",country)
 
 		if day:
 			"""
@@ -241,11 +240,6 @@ def edit(request):
 			# Without this next line the tags won't be saved.
 			form.save_m2m()
 			
-			
-			
-
-		
-		
 			response_tags = [tag.name for tag in link.tags.all()]
 			resp = {'id':link.id, 'url':link.url, 'short_url':link.short_url, 'tags':response_tags, 'messages':'Link edited successfully.'}
 		
@@ -261,16 +255,16 @@ from django.core import serializers
 def dashboard(request):
 	chart = Analytics.objects.filter().values('date__date').order_by('-date__date').annotate(sum=Sum('click'))
 	l_user = Links.objects.filter(user=request.user).order_by('-total_clicks')
-	l_all = Links.objects.aggregate(Sum('total_clicks'))['total_clicks__sum']
+	l_all = Links.objects.filter(user=request.user).order_by('-total_clicks').aggregate(Sum('total_clicks'))['total_clicks__sum']
 	context = { 'l_all': l_all, 'l_user': l_user, 'top_3': l_user[:3], 'chart':chart}
 	return render(request, 'dashboard/dashboard.html', context=context)
 
 @login_required(login_url='login')
+@never_cache
 def dashboard_chart_api(request):
-	chart = Analytics.objects.filter().values('date__date').order_by('-date__date').annotate(sum=Sum('click'))[:7]
+	chart = Analytics.objects.filter(url__user=request.user).values('date__date').order_by('-date__date').annotate(sum=Sum('click'))[:7]
 	chart_label = [date['date__date'] for date in chart ]
 	chart_clicks = [sum['sum'] for sum in chart]
-	
 	return JsonResponse({'chart_label':chart_label, 'chart_clicks':chart_clicks})
 
 @login_required(login_url='login')

@@ -64,13 +64,13 @@ class Link_only_ip_address(models.Model):
     '''
     url = models.ForeignKey(Links, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
-    ip = models.CharField(max_length=50)
-    device = models.CharField(max_length=100, default='None')
-    country = models.CharField(max_length=50, default='None')
+    # ip = models.CharField(max_length=50)
+    # device = models.CharField(max_length=100, default='None')
+    # country = models.CharField(max_length=50, default='None')
     click = models.PositiveIntegerField(null=True,blank=True,default=0)
-    # dev = models.ForeignKey(Devices, on_delete=models.CASCADE)
-    # cou = models.ForeignKey(Countries, on_delete=models.CASCADE)
-    # i_p = models.ForeignKey(Ip_address, on_delete=models.CASCADE)
+    device = models.ForeignKey(Devices, on_delete=models.CASCADE)
+    country = models.ForeignKey(Countries, on_delete=models.CASCADE)
+    ip = models.ForeignKey(Ip_address, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.ip} is in device {self.device} on {self.date.ctime()}"

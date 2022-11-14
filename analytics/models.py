@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from app.models import Links
 
 # Create your models here.
@@ -10,9 +11,7 @@ class Analytics(models.Model):
     url = models.ForeignKey(Links, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     click = models.PositiveIntegerField(null=True,blank=True,default=0)
-    # device = models.CharField(max_length=100, default='None')
-    # country = models.CharField(max_length=50, default='None')
-
+    
     class Meta:
         ordering = ['-date']
         verbose_name = 'Analytics'

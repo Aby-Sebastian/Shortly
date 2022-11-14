@@ -5,4 +5,7 @@
 [x] - user can change password from user settings page.
 [x] - add .env file to site and move all keys to that file.
 [x] - add email support strings to settings file.
-[ ] - add cache support using redis.
+[x] - add cache support using redis.
+[x] - get ip address from user request
+[x] - get country name from user IP
+[x] - get device name from user IP

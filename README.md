@@ -4,16 +4,20 @@ This is a URL management application similar to Bitly. Shortly is a URL shorteni
 With our platform, you shorten urls, build QR codes, see the shortened urls analytics, redirect links and leverage many more features.
 # Real Estate Django Web App
 -->
-A URL management application built with `python` `django` `bootstrap`. Shortly is simlar to Bitly a popular URL management application.
+A URL management application built with `python` `django` `PostgreSQL`. Shortly is simlar to Bitly a popular URL management application.
 
 A simple, reponsive  website. Built with:
 
 - Python 🐍
 - Django 🎸
 - Bootstrap 4 🌈
+- PostgreSQL
+- Redis (for cacheing)
 - Vanilla JS - ES6
 - JQuery
 - ChartJS
+- HTML
+- CSS
 
 ## Features
 
@@ -26,6 +30,7 @@ A simple, reponsive  website. Built with:
 - can add Tags to categoriza links
 - search functionality
 - authentication
+- sends email when new user registers to the application
 - shows last 7 days total clicks in dashboard
 
 ## How to run this project (Ubuntu 18.04)
